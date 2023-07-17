@@ -31,8 +31,9 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
+ * @author zkc
  * 鉴权管理器，用于判断是否有资源的访问权限
- * Created by macro on 2020/6/19.
+ * @date 2020/6/19.
  */
 @Component
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
