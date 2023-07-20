@@ -1,5 +1,5 @@
 server:
-  port: 9000
+  port: 8069
 spring:
   application:
     name: rmc-user

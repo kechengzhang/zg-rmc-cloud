@@ -1,6 +1,7 @@
 package com.zgtec.zgrmc.config;
 
 
+import cn.hutool.jwt.Claims;
 import com.zgtec.zgrmc.component.JwtTokenEnhancer;
 import com.zgtec.zgrmc.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -19,8 +20,13 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
+import javax.security.cert.Certificate;
 import java.security.KeyPair;
+import java.security.cert.X509Certificate;
+import java.security.interfaces.RSAPrivateKey;
+import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -84,8 +90,8 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Bean
     public KeyPair keyPair() {
         //从classpath下的证书中获取秘钥对
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "123456".toCharArray());
-        return keyStoreKeyFactory.getKeyPair("jwt", "123456".toCharArray());
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(new ClassPathResource("jwt.jks"), "zg123456".toCharArray());
+        return keyStoreKeyFactory.getKeyPair("zjwt", "zg123456".toCharArray());
     }
 
 }

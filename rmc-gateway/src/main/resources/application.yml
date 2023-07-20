@@ -27,7 +27,12 @@ spring:
             - Path=/rmc-user/**
           filters:
             - StripPrefix=1
-
+        - id: rmc-monitor-management
+          uri: lb://rmc-monitor-management
+          predicates:
+            - Path=/rmc-monitor-management/**
+          filters:
+            - StripPrefix=1
   security:
     oauth2:
       resourceserver:
@@ -54,7 +59,7 @@ secure:
       - "/rmc-auth/oauth/token"
       - "/rmc-auth/rsa/publicKey"
       - "/mall-search/**"
-      - "/mall-portal/sso/login"
+      - "/rmc-user/admin/login"
       - "/mall-portal/sso/register"
       - "/mall-portal/sso/getAuthCode"
       - "/mall-portal/home/**"

@@ -1,5 +1,6 @@
-package com.zgtec.zgrmc.config;
+package config;
 
+import com.zgtec.zgrmc.config.BaseSwaggerConfig;
 import com.zgtec.zgrmc.domain.SwaggerProperties;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
