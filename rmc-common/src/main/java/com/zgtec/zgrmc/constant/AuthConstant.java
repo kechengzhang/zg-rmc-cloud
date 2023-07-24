@@ -18,9 +18,9 @@ public interface AuthConstant {
     String AUTHORITY_CLAIM_NAME = "authorities";
 
     /**
-     * 后台管理client_id
+     * 用户管理client_id
      */
-    String ADMIN_CLIENT_ID = "admin-app";
+    String ADMIN_CLIENT_ID = "user-app";
 
     /**
      * 前台商城client_id
@@ -30,7 +30,7 @@ public interface AuthConstant {
     /**
      * 后台管理接口路径匹配
      */
-    String ADMIN_URL_PATTERN = "/mall-admin/**";
+    String ADMIN_URL_PATTERN = "/rmc-user/**";
 
     /**
      * Redis缓存权限规则key

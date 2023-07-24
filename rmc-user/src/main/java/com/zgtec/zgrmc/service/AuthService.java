@@ -16,7 +16,8 @@ public interface AuthService {
     @PostMapping(value = "/oauth/token")
     /**
      * 获取token
-     *
+     * @param parameters
+     * @return
      */
     Result getAccessToken(@RequestParam Map<String, String> parameters);
 }

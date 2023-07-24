@@ -18,6 +18,9 @@ public class UserDto {
     private Long id;
     private String username;
     private String password;
+    /**
+     * 账号状态
+     */
     private Integer status;
     private String clientId;
     private List<String> roles;

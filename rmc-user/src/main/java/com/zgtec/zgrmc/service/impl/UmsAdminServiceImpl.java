@@ -1,15 +1,21 @@
 package com.zgtec.zgrmc.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.zgtec.zgrmc.api.Result;
 import com.zgtec.zgrmc.constant.AuthConstant;
+import com.zgtec.zgrmc.dao.UmsAdminDAO;
+import com.zgtec.zgrmc.domain.UserDto;
 import com.zgtec.zgrmc.enums.ResultCodeEnum;
+import com.zgtec.zgrmc.pojo.dto.RoleDTO;
 import com.zgtec.zgrmc.service.AuthService;
 import com.zgtec.zgrmc.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * @author zkc
@@ -36,5 +42,17 @@ public class UmsAdminServiceImpl implements UmsAdminService {
 //            insertLoginLog(username);
         }
         return restResult;
+    }
+
+    @Override
+    public UserDto loadUserByUsername(String userName) {
+        UserDto userDto =new UserDto();
+//        userDto = umsAdminDAO.queryUserDetail(userName);
+//        List<RoleDTO> roleList = umsAdminDAO.loadUserByUsername(userName);
+//        if(CollUtil.isNotEmpty(roleList)){
+//            List<String> roleStrList = roleList.stream().map(item -> item.getId() + "_" + item.getName()).collect(Collectors.toList());
+//            userDto.setRoles(roleStrList);
+//        }
+        return userDto;
     }
 }

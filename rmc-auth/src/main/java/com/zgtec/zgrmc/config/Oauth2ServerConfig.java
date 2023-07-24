@@ -1,6 +1,7 @@
 package com.zgtec.zgrmc.config;
 
 
+import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.jwt.Claims;
 import com.zgtec.zgrmc.component.JwtTokenEnhancer;
 import com.zgtec.zgrmc.service.impl.UserServiceImpl;
@@ -38,7 +39,6 @@ import java.util.List;
 @Configuration
 @EnableAuthorizationServer
 public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
-
     private final PasswordEncoder passwordEncoder;
     private final UserServiceImpl userDetailsService;
     private final AuthenticationManager authenticationManager;
@@ -47,7 +47,7 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
         clients.inMemory()
-                .withClient("admin-app")
+                .withClient("user-app")
                 .secret(passwordEncoder.encode("123456"))
                 .scopes("all")
                 .authorizedGrantTypes("password", "refresh_token")
@@ -68,9 +68,11 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
         List<TokenEnhancer> delegates = new ArrayList<>();
         delegates.add(jwtTokenEnhancer);
         delegates.add(accessTokenConverter());
-        enhancerChain.setTokenEnhancers(delegates); //配置JWT的内容增强器
+        //配置JWT的内容增强器
+        enhancerChain.setTokenEnhancers(delegates);
         endpoints.authenticationManager(authenticationManager)
-                .userDetailsService(userDetailsService) //配置加载用户信息的服务
+                //配置加载用户信息的服务
+                .userDetailsService(userDetailsService)
                 .accessTokenConverter(accessTokenConverter())
                 .tokenEnhancer(enhancerChain);
     }

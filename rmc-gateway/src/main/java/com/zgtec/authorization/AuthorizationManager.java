@@ -1,6 +1,7 @@
 package com.zgtec.authorization;
 
 
+import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -8,6 +9,7 @@ import com.nimbusds.jose.JWSObject;
 import com.zgtec.config.IgnoreUrlsConfig;
 import com.zgtec.zgrmc.constant.AuthConstant;
 import com.zgtec.zgrmc.domain.UserDto;
+import io.lettuce.core.ScriptOutputType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
@@ -24,10 +26,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -47,7 +46,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();
-        //白名单路径直接放行
+        //白名单路径直接放行 yml文件配置的白名单
         List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl, uri.getPath())) {
@@ -83,13 +82,16 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
             return Mono.just(new AuthorizationDecision(true));
         }
         //管理端路径需校验权限
-        Map<Object, Object> resourceRolesMap = redisTemplate.opsForHash().entries(AuthConstant.RESOURCE_ROLES_MAP_KEY);
-        Iterator<Object> iterator = resourceRolesMap.keySet().iterator();
+        Map resourceRolesMap = new TreeMap<>();
+        resourceRolesMap.put("/rmc-user/admin/**", CollUtil.toList("ADMIN"));
+        redisTemplate.opsForHash().putAll(AuthConstant.RESOURCE_ROLES_MAP_KEY, resourceRolesMap);
+        Map<Object, Object> resourceRolesMap1 = redisTemplate.opsForHash().entries(AuthConstant.RESOURCE_ROLES_MAP_KEY);
         List<String> authorities = new ArrayList<>();
-        while (iterator.hasNext()) {
+        Iterator<Object> iterator = resourceRolesMap.keySet().iterator();
+        while(iterator.hasNext()){
             String pattern = (String) iterator.next();
             if (pathMatcher.match(pattern, uri.getPath())) {
-                authorities.addAll(Convert.toList(String.class, resourceRolesMap.get(pattern)));
+                authorities.addAll(Convert.toList(String.class, resourceRolesMap1.get(pattern)));
             }
         }
         authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());

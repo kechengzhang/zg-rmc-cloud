@@ -1,0 +1,17 @@
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<!DOCTYPE mapper-->
+        <!--PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"-->
+        <!--"http://mybatis.org/dtd/mybatis-3-mapper.dtd">-->
+<!--<mapper namespace="com.zgtec.zgrmc.dao.UmsAdminDAO">-->
+  <!--<select id="loadUserByUsername" resultType="com.zgtec.zgrmc.pojo.dto.RoleDTO">-->
+      <!--select  rr.id,rr.role_name  from  rmc_sys_role rr-->
+      <!--left join rmc_sys_user_role rsur on rsur.role_id=rr.id-->
+      <!--left join rmc_sys_user rsu on rsu.id= rsur.user_id-->
+      <!--<where>-->
+          <!--rsu.user_name=#{userName}-->
+      <!--</where>-->
+  <!--</select>-->
+    <!--<select id="queryUserDetail" resultType="com.zgtec.zgrmc.domain.UserDto">-->
+        <!--select-->
+    <!--</select>-->
+<!--</mapper>-->

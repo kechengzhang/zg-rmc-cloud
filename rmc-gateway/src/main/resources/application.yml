@@ -16,9 +16,11 @@ spring:
           lower-case-service-id: true #使用小写service-id
       routes: #配置路由路径
         - id: rmc-auth
-          uri: lb://rmc-auth
+          uri: lb://rmc-auth #需要转发的地址
+          #断言规则，用于路由规则匹配
           predicates:
             - Path=/rmc-auth/**
+            # 转发之前去掉第一层路径
           filters:
             - StripPrefix=1
         - id: rmc-user
@@ -37,9 +39,9 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://localhost:8080/rmc-auth/rsa/publicKey' #配置RSA的公钥访问地址
+          jwk-set-uri: 'http://localhost:8201/rmc-auth/rsa/publicKey' #配置RSA的公钥访问地址
   redis:
-    database: 0
+    database: 1
     port: 6379
     host: 139.196.232.79
     password: zkc654321
@@ -58,16 +60,7 @@ secure:
       - "/actuator/**"
       - "/rmc-auth/oauth/token"
       - "/rmc-auth/rsa/publicKey"
-      - "/mall-search/**"
       - "/rmc-user/admin/login"
-      - "/mall-portal/sso/register"
-      - "/mall-portal/sso/getAuthCode"
-      - "/mall-portal/home/**"
-      - "/mall-portal/product/**"
-      - "/mall-portal/brand/**"
-      - "/mall-admin/admin/login"
-      - "/mall-admin/admin/register"
-      - "/mall-admin/minio/upload"
 management: #开启SpringBoot Admin的监控
   endpoints:
     web:
