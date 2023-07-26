@@ -29,11 +29,11 @@
         <spring-cloud-dependencies.version>2021.0.1</spring-cloud-dependencies.version>
         <fastjson.version>1.2.35</fastjson.version>
         <mysql-connector.version>8.0.13</mysql-connector.version>
-        <mybatis-plus-boot-starter.version>3.0.6</mybatis-plus-boot-starter.version>
+        <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
         <java-jwt.version>3.8.2</java-jwt.version>
         <hutool-all.version>5.8.0</hutool-all.version>
-        <pagehelper.version>5.1.11</pagehelper.version>
-        <pagehelper-spring-boot-autoconfigure.version>1.2.3</pagehelper-spring-boot-autoconfigure.version>
+        <pagehelper-starter.version>1.4.2</pagehelper-starter.version>
+        <pagehelper.version>5.3.0</pagehelper.version>
         <commons-lang.version>2.6</commons-lang.version>
         <druid-spring-boot-starter.version>1.1.9</druid-spring-boot-starter.version>
         <spring-context-support.version>5.2.8.RELEASE</spring-context-support.version>
@@ -50,7 +50,7 @@
         <swagger-bootstrap-ui.version>1.9.6</swagger-bootstrap-ui.version>
         <knife4j.version>3.0.3</knife4j.version>
         <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
-
+        <admin-starter-server.version>2.6.3</admin-starter-server.version>
     </properties>
     <!--写在dependencyManagement里子项目需要显示引入依赖，否则不需要-->
     <dependencyManagement>
@@ -115,21 +115,17 @@
                 <artifactId>hutool-all</artifactId>
                 <version>${hutool-all.version}</version>
             </dependency>
-            <!-- pagehelper 分页 -->
+            <!--MyBatis分页插件starter-->
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper-spring-boot-starter</artifactId>
+                <version>${pagehelper-starter.version}</version>
+            </dependency>
+            <!--MyBatis分页插件-->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper</artifactId>
                 <version>${pagehelper.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
-                <version>${pagehelper-spring-boot-autoconfigure.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>com.github.pagehelper</groupId>
-                <artifactId>pagehelper-spring-boot-starter</artifactId>
-                <version>${pagehelper-spring-boot-autoconfigure.version}</version>
             </dependency>
             <dependency>
                 <groupId>commons-lang</groupId>
@@ -201,6 +197,12 @@
                 <artifactId>nimbus-jose-jwt</artifactId>
                 <version>${nimbus-jose-jwt.version}</version>
             </dependency>
+            <!--集成SpringBoot Admin监控-->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${admin-starter-server.version}</version>
+            </dependency>
         </dependencies>
 
     </dependencyManagement>
@@ -226,14 +228,6 @@
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-autoconfigure</artifactId>
-        </dependency>
         <!-- mysql驱动-->
         <dependency>
             <groupId>mysql</groupId>
@@ -243,14 +237,11 @@
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-all</artifactId>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.github.xiaoymin</groupId>-->
-            <!--<artifactId>knife4j-spring-boot-starter</artifactId>-->
-        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+
     </dependencies>
     <build>
         <plugins>

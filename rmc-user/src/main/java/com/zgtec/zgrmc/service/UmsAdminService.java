@@ -2,6 +2,7 @@ package com.zgtec.zgrmc.service;
 
 import com.zgtec.zgrmc.api.Result;
 import com.zgtec.zgrmc.domain.UserDto;
+import com.zgtec.zgrmc.pojo.param.UmsAdminParam;
 
 /**
  * @author  zkc
@@ -26,4 +27,20 @@ public interface UmsAdminService {
      * @return
      */
     UserDto loadUserByUsername(String userName);
+
+    /**
+     * 添加用户
+     *
+     * @param umsAdminParam 用户基本信息
+     * @return
+     */
+    int saveUser(UmsAdminParam umsAdminParam);
+
+    /**
+     * 修改用户休息
+     *
+     * @param umsAdminParam 用户基本信息
+     * @return
+     */
+    int updateUser(UmsAdminParam umsAdminParam);
 }

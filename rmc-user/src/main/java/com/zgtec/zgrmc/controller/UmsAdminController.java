@@ -1,14 +1,15 @@
 package com.zgtec.zgrmc.controller;
 
 import com.zgtec.zgrmc.api.Result;
+import com.zgtec.zgrmc.dao.UmsAdminDAO;
 import com.zgtec.zgrmc.domain.UserDto;
 import com.zgtec.zgrmc.enums.ResultCodeEnum;
 import com.zgtec.zgrmc.pojo.dto.UmsAdminLoginDTO;
+import com.zgtec.zgrmc.pojo.param.UmsAdminParam;
 import com.zgtec.zgrmc.service.UmsAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -23,11 +24,15 @@ import org.springframework.web.bind.annotation.*;
 public class UmsAdminController {
     @Autowired
     private UmsAdminService umsAdminService;
+    @Autowired
+    private UmsAdminDAO umsAdminDAO;
+
     @ApiOperation(value = "登录以后返回token")
     @PostMapping(value = "/login")
 //    public Result login(@Validated @RequestBody UmsAdminLoginDTO umsAdminLoginDTO) {
     public Result login(@RequestParam ("username") String username,@RequestParam ("password") String password) {
         UmsAdminLoginDTO umsAdminLoginDTO =new UmsAdminLoginDTO();
+        umsAdminDAO.queryUserDetail("admin");
         return umsAdminService.login(username,password);
     }
 
@@ -39,10 +44,23 @@ public class UmsAdminController {
         return userDTO;
     }
 
-    @GetMapping(value = "/test1")
-    @ApiOperation(value = "测试")
-    public Result test1() {
-        System.out.println("##################");
-        return Result.success(ResultCodeEnum.SUCCESS);
+    @PostMapping(value = "/saveUser")
+    @ApiOperation(value = "添加用户")
+    public Result saveUser(@RequestBody UmsAdminParam umsAdminParam) {
+        int result =umsAdminService.saveUser(umsAdminParam);
+        if(result > 0){
+            return Result.success(ResultCodeEnum.SAVE_SUCCESS);
+        }
+        return Result.failure(ResultCodeEnum.SAVE_ERROR);
     }
+    @PutMapping(value = "/updateUser")
+    @ApiOperation(value = "添加用户")
+    public Result updateUser(@RequestBody UmsAdminParam umsAdminParam) {
+        int result =umsAdminService.updateUser(umsAdminParam);
+        if(result > 0){
+            return Result.success(ResultCodeEnum.SAVE_SUCCESS);
+        }
+        return Result.failure(ResultCodeEnum.SAVE_ERROR);
+    }
+
 }

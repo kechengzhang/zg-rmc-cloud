@@ -1,7 +1,12 @@
 package com.zgtec.zgrmc.dao;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.zgtec.zgrmc.domain.UserDto;
 import com.zgtec.zgrmc.pojo.dto.RoleDTO;
+import com.zgtec.zgrmc.pojo.entity.UmsAdminDO;
+import com.zgtec.zgrmc.pojo.param.UmsAdminParam;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -11,8 +16,8 @@ import java.util.List;
  * @Date 2023/7/23 16:43 星期日
  * @Version 1.0
  */
-//@Repository
-public interface UmsAdminDAO {
+@Mapper
+public interface UmsAdminDAO extends BaseMapper<UmsAdminDO> {
     /**
      * 获取用户详细信息
      *

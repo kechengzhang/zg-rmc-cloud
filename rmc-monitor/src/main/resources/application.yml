@@ -1,2 +1,13 @@
 server:
-  port: 8001
+  port: 8101
+spring:
+  application:
+    name: rmc-monitor
+  security: # 配置登录用户名和密码
+    user:
+      name: zg
+      password: 123456
+  boot:  # 不显示admin-server的监控信息
+    admin:
+      discovery:
+        ignored-services: ${spring.application.name}

@@ -3,7 +3,6 @@ server:
 spring:
   application:
     name: rmc-user
-
   datasource:
     url: jdbc:mysql://localhost:3306/zg_rmc?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
