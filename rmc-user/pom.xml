@@ -11,6 +11,7 @@
     <artifactId>rmc-user</artifactId>
     <dependencies>
         <dependency>
+
             <groupId>com.zgtec.zgrmc</groupId>
             <artifactId>rmc-common</artifactId>
             <version>1.0.0-SNAPSHOT</version>
