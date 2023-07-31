@@ -23,9 +23,10 @@ public enum ResultCodeEnum {
     QUERY_SUCCESS("00000", "查询成功"),
     FILE_UPLOAD_SUCCESS("00000", "文件上传成功"),
     USER_LOGIN_SUCCESS("00000", "登录成功"),
+    INIT_RESOURCE_ROLE_SUCCESS("00000", "初始化资源角色关联数据成功"),
     ERROR("B0001", "未知异常"),
     SAVE_ERROR("B0002", "新增失败"),
-    DELETE_ERROR("B0005", "删除失败，该分类已被案例使用"),
+    DELETE_ERROR("B0005", "删除失败"),
     UPDATE_ERROR("B0003", "修改失败"),
     SQL_EXCEPTION("B0004", "SqlException:SQL异常");
     private String msg;

@@ -11,18 +11,18 @@ import lombok.Data;
  * @Version 1.0
  */
 @Data
-@ApiModel(value = "用户新增参数")
+@ApiModel(value = "用户新增,修改参数")
 public class UmsAdminParam {
-    @ApiModelProperty(value = "用户名")
+    @ApiModelProperty(value = "用户名",required = true)
     private String userName;
-    @ApiModelProperty(value = "密码")
+    @ApiModelProperty(value = "密码",required = true)
     private String password;
-    @ApiModelProperty(value = "邮箱")
+    @ApiModelProperty(value = "邮箱",required = true)
     private String email;
-    @ApiModelProperty(value = "姓名")
+    @ApiModelProperty(value = "姓名",required = true)
     private String nickName;
-    @ApiModelProperty(value = "备注")
+    @ApiModelProperty(value = "备注",required = true)
     private String note;
-    @ApiModelProperty(value = "帐号启用状态：0->禁用；1->启用")
+    @ApiModelProperty(value = "帐号启用状态：0->禁用；1->启用",required = true)
     private Integer status;
 }

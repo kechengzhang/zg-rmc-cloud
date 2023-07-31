@@ -6,9 +6,6 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import lombok.experimental.Accessors;
-
-import java.io.Serializable;
 
 /**
  * @author zkc
@@ -18,7 +15,8 @@ import java.io.Serializable;
  */
 @Data
 @TableName(value = "ums_admin")
-@Accessors(chain = true)
+//链式编程
+//@Accessors(chain = true)
 public class UmsAdminDO {
     @TableId(type = IdType.AUTO)
     @ApiModelProperty(value = "自增id")

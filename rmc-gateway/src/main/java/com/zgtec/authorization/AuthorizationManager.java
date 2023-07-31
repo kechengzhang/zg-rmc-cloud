@@ -82,16 +82,16 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
             return Mono.just(new AuthorizationDecision(true));
         }
         //管理端路径需校验权限
-        Map resourceRolesMap = new TreeMap<>();
-        resourceRolesMap.put("/rmc-user/admin/**", CollUtil.toList("ADMIN"));
-        redisTemplate.opsForHash().putAll(AuthConstant.RESOURCE_ROLES_MAP_KEY, resourceRolesMap);
-        Map<Object, Object> resourceRolesMap1 = redisTemplate.opsForHash().entries(AuthConstant.RESOURCE_ROLES_MAP_KEY);
+//        Map resourceRolesMap = new TreeMap<>();
+//        resourceRolesMap.put("/rmc-user/admin/**", CollUtil.toList("ADMIN"));
+//        redisTemplate.opsForHash().putAll(AuthConstant.RESOURCE_ROLES_MAP_KEY, resourceRolesMap);
+        Map<Object, Object> resourceRolesMap = redisTemplate.opsForHash().entries(AuthConstant.RESOURCE_ROLES_MAP_KEY);
         List<String> authorities = new ArrayList<>();
         Iterator<Object> iterator = resourceRolesMap.keySet().iterator();
         while(iterator.hasNext()){
             String pattern = (String) iterator.next();
             if (pathMatcher.match(pattern, uri.getPath())) {
-                authorities.addAll(Convert.toList(String.class, resourceRolesMap1.get(pattern)));
+                authorities.addAll(Convert.toList(String.class, resourceRolesMap.get(pattern)));
             }
         }
         authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());

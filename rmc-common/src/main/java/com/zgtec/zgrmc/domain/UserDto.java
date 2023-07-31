@@ -16,13 +16,24 @@ import java.util.List;
 @NoArgsConstructor
 public class UserDto {
     private Long id;
+    /**
+     * 用户名
+     *
+     */
     private String username;
+    /**
+     * 密码
+     *
+     */
     private String password;
     /**
      * 账号状态
      */
     private Integer status;
     private String clientId;
+    /**
+     * 角色
+     */
     private List<String> roles;
 
 }

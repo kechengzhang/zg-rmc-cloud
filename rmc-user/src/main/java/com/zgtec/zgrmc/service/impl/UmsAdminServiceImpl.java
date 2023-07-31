@@ -11,6 +11,7 @@ import com.zgtec.zgrmc.enums.ResultCodeEnum;
 import com.zgtec.zgrmc.pojo.dto.RoleDTO;
 import com.zgtec.zgrmc.pojo.entity.UmsAdminDO;
 import com.zgtec.zgrmc.pojo.param.UmsAdminParam;
+import com.zgtec.zgrmc.pojo.param.UmsAdminRoleRelationParam;
 import com.zgtec.zgrmc.service.AuthService;
 import com.zgtec.zgrmc.service.UmsAdminService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminDAO, UmsAdminDO> implements UmsAdminService {
-    private static final BeanCopier copier = BeanCopier.create(UmsAdminParam.class, UmsAdminDO.class, false);
+    private static final BeanCopier copier = BeanCopier.create(UmsAdminParam.class,UmsAdminDO.class,  false);
     @Autowired
     private AuthService authService;
     @Autowired
@@ -54,12 +55,11 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminDAO, UmsAdminDO> im
 
     @Override
     public UserDto loadUserByUsername(String userName) {
-        UserDto userDto =new UserDto();
-        userDto = umsAdminDAO.queryUserDetail(userName);
-        List<RoleDTO> roleList = umsAdminDAO.loadUserByUsername(userName);
-        if(CollUtil.isNotEmpty(roleList)){
-            List<String> roleStrList = roleList.stream().map(item -> item.getId() + "_" + item.getName()).collect(Collectors.toList());
-            userDto.setRoles(roleStrList);
+        //查询用户详细信息
+        UserDto userDto = umsAdminDAO.queryUserDetail(userName);
+        if(userDto != null) {
+            List<String> roleList = umsAdminDAO.getUserRole(userDto.getId());
+            userDto.setRoles(roleList);
         }
         return userDto;
     }
@@ -83,6 +83,18 @@ public class UmsAdminServiceImpl extends ServiceImpl<UmsAdminDAO, UmsAdminDO> im
         String encodePassword = BCrypt.hashpw(umsAdminParam.getPassword());
         umsAdminDO.setPassword(encodePassword);
         int result = umsAdminDAO.updateById(umsAdminDO);
+        return result;
+    }
+
+    @Override
+    public int deleteUser(Long id) {
+        int result = umsAdminDAO.deleteUser(id);
+        return result;
+    }
+
+    @Override
+    public int saveAdminRoleRelation(List<UmsAdminRoleRelationParam> umsAdminRoleRelationParam) {
+        int result = umsAdminDAO.saveAdminRoleRelation(umsAdminRoleRelationParam);
         return result;
     }
 }

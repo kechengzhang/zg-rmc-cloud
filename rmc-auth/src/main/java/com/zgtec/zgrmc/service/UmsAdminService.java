@@ -10,6 +10,12 @@ import org.springframework.web.bind.annotation.RequestParam;
  */
 @FeignClient("rmc-user")
 public interface UmsAdminService {
-    @GetMapping("/admin/login")
-    UserDto loadUserByUsername(@RequestParam ("username")String username);
+    /**
+     * 获取用户信息
+     *
+     * @param userName 用户名
+     * @return
+     */
+    @GetMapping("/admin/users/{userName}")
+    UserDto loadUserByUsername(@RequestParam ("userName")String userName);
 }

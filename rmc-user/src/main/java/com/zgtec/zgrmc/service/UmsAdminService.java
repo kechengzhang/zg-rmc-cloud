@@ -3,6 +3,9 @@ package com.zgtec.zgrmc.service;
 import com.zgtec.zgrmc.api.Result;
 import com.zgtec.zgrmc.domain.UserDto;
 import com.zgtec.zgrmc.pojo.param.UmsAdminParam;
+import com.zgtec.zgrmc.pojo.param.UmsAdminRoleRelationParam;
+
+import java.util.List;
 
 /**
  * @author  zkc
@@ -14,8 +17,8 @@ public interface UmsAdminService {
     /**
      *
      * 登录
-     * @param userName
-     * @param password
+     * @param userName 用户名
+     * @param password 密码
      * @return
      */
     Result login(String userName,String password);
@@ -43,4 +46,19 @@ public interface UmsAdminService {
      * @return
      */
     int updateUser(UmsAdminParam umsAdminParam);
+
+    /**
+     * 删除用户
+     * @param id 用户id
+     * @return
+     */
+    int deleteUser(Long id);
+
+    /**
+     * 分配角色
+     *
+     * @param umsAdminRoleRelationParam
+     * @return
+     */
+    int saveAdminRoleRelation(List<UmsAdminRoleRelationParam> umsAdminRoleRelationParam);
 }

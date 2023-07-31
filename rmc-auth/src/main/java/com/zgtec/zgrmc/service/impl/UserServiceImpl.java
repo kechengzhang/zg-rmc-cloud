@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
 /**
+ * @author  zkc
  * 用户管理业务类
  * Created by macro on 2020/6/19.
  */
@@ -34,15 +35,18 @@ public class UserServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String clientId = request.getParameter("client_id");
         UserDto userDto = new UserDto();
-//        if(AuthConstant.ADMIN_CLIENT_ID.equals(clientId)){
-//            userDto = adminService.loadUserByUsername(username);
-            userDto.setId(1L);
-            userDto.setUsername("zkc");
-            userDto.setRoles(CollUtil.toList("ADMIN"));
-            //密码需要 BCrypt.hashpw("123456")
-            userDto.setPassword(BCrypt.hashpw(userDto.getPassword()));
-            userDto.setStatus(1);
+//        if(AuthConstant.ADMIN_CLIENT_ID.equals(clientId)) {
+            userDto = adminService.loadUserByUsername(username);
+//            System.out.println("@@@@@@@@@@@"+userDto.getRoles());
+////            userDto.setId(1L);
+////            userDto.setUsername("zkc");
+////            userDto.setRoles(CollUtil.toList("ADMIN"));
+//            //密码需要 BCrypt.hashpw("123456")
+////            userDto.setPassword(BCrypt.hashpw(userDto.getPassword()));
+////            userDto.setPassword(BCrypt.hashpw("123456"));
+//            userDto.setStatus(1);
             userDto.setClientId(AuthConstant.ADMIN_CLIENT_ID);
+//        }
         if (userDto==null) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }

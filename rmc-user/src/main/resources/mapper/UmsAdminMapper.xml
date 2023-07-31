@@ -12,7 +12,32 @@
       </where>
   </select>
     <select id="queryUserDetail" resultType="com.zgtec.zgrmc.domain.UserDto">
-        select
+        select id,user_name,password,status from ums_admin
+        <where>
+            user_name=#{userName}
+        </where>
     </select>
+    <delete id="deleteUser">
+        delete from ums_admin
+        <where>
+            id #{id}
+        </where>
+    </delete>
 
+    <insert id="saveAdminRoleRelation">
+        insert into ums_admin_role_relation
+        (admin_id,role_id)
+        values
+        <foreach collection="umsAdminRoleRelationParam" separator="," item="u" open="(" close=")">
+            (#{u.adminId},#{u.roleId} )
+        </foreach>
+    </insert>
+    <select id="getUserRole" resultType="java.lang.String">
+        select CONCAT(ur.id,'_',ur.name) as roleName
+        from  ums_role ur
+        left join ums_admin_role_relation uarr on uarr.role_id=ur.id
+        <where>
+            uarr.admin_id=#{userId}
+        </where>
+    </select>
 </mapper>
