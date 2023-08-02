@@ -51,6 +51,10 @@
         <knife4j.version>3.0.3</knife4j.version>
         <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
         <admin-starter-server.version>2.6.3</admin-starter-server.version>
+        <!--<docker.host>http://139.196.232.79:2375</docker.host>-->
+        <docker.host>https://139.196.232.79:2375</docker.host>
+        <spring-boot.version>2.6.3</spring-boot.version>
+        <docker.maven.plugin.version>0.43.2</docker.maven.plugin.version>
     </properties>
     <!--写在dependencyManagement里子项目需要显示引入依赖，否则不需要-->
     <dependencyManagement>
@@ -243,18 +247,87 @@
         </dependency>
 
     </dependencies>
+
+    <!--<pluginManagement>: 这个元素用于配置Maven插件的管理信息。它通常包含一组插件定义，但不会直接执行。
+    在这个片段中，这里配置了两个插件：spring-boot-maven-plugin和docker-maven-plugin -->
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <encoding>UTF-8</encoding>
-                </configuration>
-            </plugin>
-        </plugins>
+        <pluginManagement>
+            <!-- <plugins>: 这个元素用于列出要使用的Maven插件。
+            在这个片段中，定义了两个插件：spring-boot-maven-plugin和docker-maven-plugin。-->
+            <plugins>
+                <!-- spring-boot-maven-plugin: 这个插件是Spring Boot官方提供的Maven插件，
+                用于支持Spring Boot项目的构建和打包。它的主要作用是将项目打包成可执行的JAR或WAR文件。-->
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${spring-boot.version}</version>
+                </plugin>
+                <!--docker-maven-plugin: 这个插件是io.fabric8提供的Docker Maven插件，
+                用于支持将项目打包为Docker镜像。它允许你在项目打包时，
+                构建Docker镜像并将应用程序打包到镜像中。 -->
+                <plugin>
+                    <groupId>io.fabric8</groupId>
+                    <artifactId>docker-maven-plugin</artifactId>
+                    <version>${docker.maven.plugin.version}</version>
+                    <executions>
+                        <!--如果想在项目打包时构建镜像添加-->
+                        <execution>
+                            <id>build-image</id>
+                            <phase>package</phase>
+                            <goals>
+                                <goal>build</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <!-- Docker 远程管理地址-->
+                        <dockerHost>${docker.host}</dockerHost>
+                        <!-- 指定证书路径 否则ssl验证无法通过-->
+                        <certPath>D:\docker\certs</certPath>
+                        <images>
+                            <image>
+                                <!--定义镜像名称-->
+                                <name>rmc/${project.name}:${project.version}</name>
+                                <!--定义镜像构建行为-->
+                                <build>
+                                    <!--定义基础镜像-->
+                                    <from>openjdk:8</from>
+                                    <args>
+                                        <JAR_FILE>${project.build.finalName}.jar</JAR_FILE>
+                                    </args>
+                                    <!--定义哪些文件拷贝到容器中-->
+                                    <assembly>
+                                        <!--定义拷贝到容器的目录-->
+                                        <targetDir>/</targetDir>
+                                        <!--只拷贝生成的jar包-->
+                                        <descriptorRef>artifact</descriptorRef>
+                                    </assembly>
+                                    <!--定义容器启动命令-->
+                                    <entryPoint>["java", "-jar","-Dspring.profiles.active=prod","/${project.build.finalName}.jar"]</entryPoint>
+                                    <!--定义维护者-->
+                                    <maintainer>zkc</maintainer>
+                                </build>
+                            </image>
+                        </images>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
+
+
+    <!--<build>-->
+        <!--<plugins>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                <!--<version>3.8.1</version>-->
+                <!--<configuration>-->
+                    <!--<source>1.8</source>-->
+                    <!--<target>1.8</target>-->
+                    <!--<encoding>UTF-8</encoding>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+        <!--</plugins>-->
+    <!--</build>-->
 </project>

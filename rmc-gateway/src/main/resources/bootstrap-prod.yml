@@ -1,0 +1,6 @@
+spring:
+  cloud:
+    nacos:
+      server-addr: nacos-registry:8848
+      username: nacos
+      password: 1qw2!QW@!QAZ

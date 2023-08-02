@@ -55,6 +55,6 @@ public class AuthController {
                 .refreshToken(oAuth2AccessToken.getRefreshToken().getValue())
                 .expiresIn(oAuth2AccessToken.getExpiresIn())
                 .tokenHead(AuthConstant.JWT_TOKEN_PREFIX).build();
-        return Result.success(ResultCodeEnum.SUCCESS,oauth2TokenDto);
+        return Result.success(ResultCodeEnum.TOKEN_SUCCESS,oauth2TokenDto);
     }
 }

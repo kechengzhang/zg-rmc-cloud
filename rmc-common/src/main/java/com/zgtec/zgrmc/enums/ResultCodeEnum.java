@@ -17,6 +17,7 @@ public enum ResultCodeEnum {
      *
      */
     SUCCESS("00000", "success"),
+    TOKEN_SUCCESS("00000", "获取token成功"),
     SAVE_SUCCESS("00000", "新增成功"),
     DELETE_SUCCESS("00000", "删除成功"),
     UPDATE_SUCCESS("00000", "修改成功"),
