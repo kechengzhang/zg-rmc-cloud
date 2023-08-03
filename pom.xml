@@ -51,8 +51,8 @@
         <knife4j.version>3.0.3</knife4j.version>
         <nimbus-jose-jwt.version>9.23</nimbus-jose-jwt.version>
         <admin-starter-server.version>2.6.3</admin-starter-server.version>
-        <!--<docker.host>http://139.196.232.79:2375</docker.host>-->
-        <docker.host>https://139.196.232.79:2375</docker.host>
+        <docker.host>http://127.0.0.1:2375</docker.host>
+        <!--<docker.host>https://139.196.232.79:2375</docker.host>-->
         <spring-boot.version>2.6.3</spring-boot.version>
         <docker.maven.plugin.version>0.43.2</docker.maven.plugin.version>
     </properties>
@@ -283,7 +283,7 @@
                         <!-- Docker 远程管理地址-->
                         <dockerHost>${docker.host}</dockerHost>
                         <!-- 指定证书路径 否则ssl验证无法通过-->
-                        <certPath>D:\docker\certs</certPath>
+                        <!--<certPath>D:\docker\certs</certPath>-->
                         <images>
                             <image>
                                 <!--定义镜像名称-->

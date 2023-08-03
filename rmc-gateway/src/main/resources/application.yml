@@ -1,16 +1,10 @@
 server:
   port: 8201
 spring:
-#  application:
-#    name: rmc-gateway
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-#  cloud:
-#    nacos:
-#      server-addr: nacos-registry:8848
-#      username: nacos
-#      password: 1qw2!QW@!QAZ
+  cloud:
     gateway:
       discovery:
         locator:

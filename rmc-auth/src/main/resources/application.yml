@@ -1,17 +1,9 @@
 server:
   port: 8080
 spring:
-#  application:
-#    name: rmc-auth
-#  cloud:
-#    nacos:
-##      server-addr: 127.0.0.1:8848
-#      server-addr: nacos-registry:8848
-#      username: nacos
-#      password: 1qw2!QW@!QAZ
   mvc:
-      pathmatch:
-        matching-strategy: ant_path_matcher
+    pathmatch:
+      matching-strategy: ant_path_matcher
 management: #开启SpringBoot Admin的监控
   endpoints:
     web:

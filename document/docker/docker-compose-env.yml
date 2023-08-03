@@ -1,54 +1,66 @@
-#这指定了 Docker Compose 文件的版本。在这里，版本号为 '3' 表示使用 Docker Compose 的版本 3 格式。
+#这指定了 Docker Compose 文件的版本。在这里，版本号为 '3'
+#表示使用 Docker Compose 的版本 3 格式。
 version: '3'
 # 这是一个映射，用于定义 Docker Compose 中的服务列表
 services:
-  #这是一个服务名称，用于启动 MySQL 数据库容器。
-  mysql:
-  #这是要使用的 MySQL 镜像的名称和标签，指定了版本为 5.7。
-    image: mysql:5.7
-    # 这指定了创建的容器的名称为 mysql
-    container_name: mysql
-    #这是在容器中运行的 MySQL 启动命令，用于设置字符集和校对规则。
-    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
-    #这设置了容器在退出后总是自动重启。
-    restart: always
-    #这是一个列表，用于设置容器的环境变量。
+  nacos-registry:
+    image: nacos/nacos-server:2.0.2
+    container_name: nacos-registry
     environment:
-    # 设置了 MySQL 的 root 用户密码为 root。
-      MYSQL_ROOT_PASSWORD: root
-      #这是一个列表，用于将容器内部的端口映射到主机的端口。
+      - "MODE=standalone"
+      - "NACOS_AUTH_ENABLE=true" # 开启密码验证
+      - "NACOS_AUTH_USERNAME=nacos" # 设置登录用户名
+      - "NACOS_AUTH_PASSWORD=1qw2!QW@!QAZ" # 设置登录密码
     ports:
-    #将容器的 3306 端口映射到主机的 3306 端口。
+      - 8848:8848
+    networks:
+      - my_network
+  mysql: #这是一个服务名称，用于启动 MySQL 数据库容器。
+    image: mysql:latest #这是要使用的 MySQL 镜像的名称和标签，指定了版本
+    container_name: mysql # 这指定了创建的容器的名称为 mysql
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+      --timezone=Asia/Shanghai  #这是在容器中运行的 MySQL 启动命令，用于设置字符集和校对规则。
+    restart: always #这设置了容器在退出后总是自动重启。
+    environment: #这是一个列表，用于设置容器的环境变量。
+      MYSQL_ROOT_PASSWORD: root  # 设置了 MySQL 的 root 用户密码为 root。
+    ports: #这是一个列表，用于将容器内部的端口映射到主机的端口。
       - 3306:3306
-      #这是一个列表，用于挂载主机的目录或文件到容器内部的目录。
-    volumes:
-       #这将主机的 /mydata/mysql/data/db 目录挂载到容器内的 /var/lib/mysql 目录，用于持久化 MySQL 数据文件。
-      - /mydata/mysql/data/db:/var/lib/mysql
-      #这将主机的 /mydata/mysql/data/conf 目录挂载到容器内的 /etc/mysql/conf.d 目录，用于挂载 MySQL 配置文件。
-      - /mydata/mysql/data/conf:/etc/mysql/conf.d
-      #这将主机的 /mydata/mysql/log 目录挂载到容器内的 /var/log/mysql 目录，用于持久化 MySQL 日志文件。
-      - /mydata/mysql/log:/var/log/mysql
+    volumes: #这是一个列表，用于挂载主机的目录或文件到容器内部的目录
+     #这将主机的 /mydata/mysql/data/db 目录挂载到容器内的 /var/lib/mysql 目录，
+     #用于持久化 MySQL 数据文件。
+      - d:\mydata\mysql\data\db:/var/lib/mysql
+      #这将主机的 /mydata/mysql/data/conf 目录挂载到容器内的 /etc/mysql/conf.d 目录，
+      #用于挂载 MySQL 配置文件。
+      - d:\mydata\mysql\data\conf:/etc/mysql/conf.d
+       #这将主机的 /mydata/mysql/log 目录挂载到容器内的 /var/log/mysql 目录，
+       #用于持久化 MySQL 日志文件。
+      - d:\mydata\mysql\log:/var/log/mysql
+    networks:
+      - my_network
   redis:
-    image: redis:7
+    image: redis:7.0
     container_name: redis
-    command: redis-server --appendonly yes
+    command: redis-server --requirepass zkc654321 --appendonly yes
     volumes:
-      - /mydata/redis/data:/data #数据文件挂载
+      - d:\mydata\redis\data:/data
     ports:
       - 6379:6379
+    networks:
+      - my_network
   nginx:
     image: nginx:1.22
     container_name: nginx
     volumes:
-      - /mydata/nginx/conf:/etc/nginx #配置文件挂载
-      - /mydata/nginx/html:/usr/share/nginx/html #静态资源根目录挂载
-      - /mydata/nginx/log:/var/log/nginx #日志文件挂载
+     #配置文件挂载
+      - /mydata/nginx/conf:/etc/nginx
+      #静态资源根目录挂载
+      - /mydata/nginx/html:/usr/share/nginx/html
+      #日志文件挂载
+      - /mydata/nginx/log:/var/log/nginx
     ports:
       - 80:80
-  nacos-registry:
-    image: nacos/nacos-server:v1.4.2
-    container_name: nacos-registry
-    environment:
-      - "MODE=standalone"
-    ports:
-      - 8848:8848
+    networks:
+      - my_network
+networks:
+  my_network:
+    driver: bridge

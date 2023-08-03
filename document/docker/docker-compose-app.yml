@@ -1,52 +1,53 @@
 version: '3'
 services:
-  rmc-user:
-    image: rmc/rmc-user:1.0.0-SNAPSHOT
-    container_name: rmc-user
-    ports:
-      - 8069:8069
-    volumes:
-      - /mydata/app/rmc-user/logs:/var/logs
-      - /etc/localtime:/etc/localtime
-    environment:
-      - 'TZ="Asia/Shanghai"'
-    external_links:
-      - mysql:db #可以用db这个域名访问mysql服务
-      - nacos-registry:nacos-registry #可以用nacos-registry这个域名访问nacos服务
   rmc-auth:
     image: rmc/rmc-auth:1.0.0-SNAPSHOT
     container_name: rmc-auth
     ports:
       - 8401:8401
     volumes:
-      - /mydata/app/rmc-auth/logs:/var/logs
-      - /etc/localtime:/etc/localtime
+      - /mnt/d/app/rmc-auth/logs:/var/logs
+      - d:\etc\localtime:/etc/localtime
     environment:
-      - 'TZ="Asia/Shanghai"'
-    external_links:
-      - nacos-registry:nacos-registry #可以用nacos-registry这个域名访问nacos服务
+      - 'TZ=Asia/Shanghai'
+    networks:
+      - dockercompose_my_network
   rmc-gateway:
     image: rmc/rmc-gateway:1.0.0-SNAPSHOT
     container_name: rmc-gateway
     ports:
       - 8201:8201
     volumes:
-      - /mydata/app/rmc-gateway/logs:/var/logs
-      - /etc/localtime:/etc/localtime
+      - /mnt/d/app/rmc-gateway/logs:/var/logs
+    #  - /mnt/d/etc/localtime:/etc/localtime
     environment:
-      - 'TZ="Asia/Shanghai"'
-    external_links:
-#      - redis:redis #可以用redis这个域名访问redis服务
-      - nacos-registry:nacos-registry #可以用nacos-registry这个域名访问nacos服务
+      - 'TZ=Asia/Shanghai'
+    networks:
+      - dockercompose_my_network
   rmc-monitor:
     image: rmc/rmc-monitor:1.0.0-SNAPSHOT
     container_name: rmc-monitor
     ports:
       - 8101:8101
     volumes:
-      - /mydata/app/rmc-monitor/logs:/var/logs
-      - /etc/localtime:/etc/localtime
+      - /mnt/d/app/rmc-monitor/logs:/var/logs
+   #   - /mnt/d/etc/localtime:/etc/localtime
     environment:
-      - 'TZ="Asia/Shanghai"'
-    external_links:
-      - nacos-registry:nacos-registry #可以用nacos-registry这个域名访问nacos服务
+      - 'TZ=Asia/Shanghai'
+    networks:
+      - dockercompose_my_network
+  rmc-user:
+    image: rmc/rmc-user:1.0.0-SNAPSHOT
+    container_name: rmc-user
+    ports:
+      - 8069:8069
+    volumes:
+      - /mnt/d/app/rmc-user/logs:/var/logs
+  #    - /mnt/d/etc/localtime:/etc/localtime
+    environment:
+      - 'TZ=Asia/Shanghai'
+    networks:
+      - dockercompose_my_network
+networks:
+  dockercompose_my_network:
+    external: true
