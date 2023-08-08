@@ -39,8 +39,14 @@ spring:
   redis:
     database: 1
     port: 6379
-    host: 139.196.232.79
+    host: redis
     password: zkc654321
+    lettuce:
+          pool:
+            max-active: 8
+            max-wait: -1ms
+            max-idle: 8
+            min-idle: 0
 secure:
   ignore:
     urls: #配置白名单路径

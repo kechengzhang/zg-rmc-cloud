@@ -1,9 +1,9 @@
 package com.zgtec.zgrmc.constant;
 
 /**
- * @author  zkc
  * 消息常量
- * Created by macro on 2020/6/19.
+ * @author zkc
+ * @Date 2023/4/15 22:17 星期六
  */
 public class MessageConstant {
 

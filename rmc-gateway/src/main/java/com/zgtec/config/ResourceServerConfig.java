@@ -23,7 +23,8 @@ import reactor.core.publisher.Mono;
 
 /**
  * 资源服务器配置
- * Created by macro on 2020/6/19.
+ * @author zkc
+ * @data 2023/07/15
  */
 @AllArgsConstructor
 @Configuration

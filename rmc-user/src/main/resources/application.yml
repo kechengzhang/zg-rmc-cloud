@@ -1,8 +1,6 @@
 server:
   port: 8069
 spring:
-#  application:
-#    name: rmc-user
   datasource:
     url: jdbc:mysql://mysql:3306/zg_mall?useUnicode=true&characterEncoding=utf-8&serverTimezone=Asia/Shanghai&useSSL=false
     username: root
@@ -21,6 +19,12 @@ spring:
       port: 6379 # Redis服务器连接端口
       password: zkc654321 # Redis服务器连接密码（默认为空）
       timeout: 3000ms # 连接超时时间（毫秒）
+      lettuce:
+            pool:
+              max-active: 8
+              max-wait: -1ms
+              max-idle: 8
+              min-idle: 0
 mybatis-plus:
 #  configuration:
 #    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
@@ -37,7 +41,7 @@ mybatis-plus:
       # 逻辑未删除值(默认为 0)
       logic-not-delete-value: 0
   mapper-locations:
-  - /mapper/*.xml
+   - /mapper/*.xml
 management: #开启SpringBoot Admin的监控
   endpoints:
     web:

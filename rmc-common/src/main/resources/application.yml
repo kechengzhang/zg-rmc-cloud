@@ -1,16 +1,16 @@
-spring:
-  redis:
-   #================单机连接====================
-    database: 0
-    host: 139.196.232.79
-    port: 6379
-    password: zkc654321
-    lettuce:
-      pool:
-        max-active: 8
-        max-wait: -1ms
-        max-idle: 8
-        min-idle: 0
+#spring:
+#  redis:
+#   #================单机连接====================
+#    database: 0
+#    host: 139.196.232.79
+#    port: 6379
+#    password: zkc654321
+#    lettuce:
+#      pool:
+#        max-active: 8
+#        max-wait: -1ms
+#        max-idle: 8
+#        min-idle: 0
   #============连接集群==============
 #    cluster:
 #      nodes:

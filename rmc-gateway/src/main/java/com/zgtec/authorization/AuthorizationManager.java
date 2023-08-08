@@ -1,7 +1,6 @@
 package com.zgtec.authorization;
 
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.convert.Convert;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
@@ -9,7 +8,6 @@ import com.nimbusds.jose.JWSObject;
 import com.zgtec.config.IgnoreUrlsConfig;
 import com.zgtec.zgrmc.constant.AuthConstant;
 import com.zgtec.zgrmc.domain.UserDto;
-import io.lettuce.core.ScriptOutputType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
@@ -26,7 +24,10 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.text.ParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**

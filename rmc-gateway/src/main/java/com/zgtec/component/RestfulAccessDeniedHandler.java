@@ -19,7 +19,9 @@ import java.nio.charset.Charset;
 /**
  * @author  zkc
  * 自定义返回结果：没有权限访问时
- * Created by macro on 2018/4/26.
+ * @author zkc
+ * @data 2023/07/15
+ *
  */
 @Component
 public class RestfulAccessDeniedHandler implements ServerAccessDeniedHandler {
