@@ -2,7 +2,6 @@ package com.zgtec.zgrmc.service.impl;
 
 
 import cn.hutool.core.collection.CollUtil;
-
 import cn.hutool.crypto.digest.BCrypt;
 import com.zgtec.zgrmc.constant.AuthConstant;
 import com.zgtec.zgrmc.constant.MessageConstant;
@@ -38,14 +37,15 @@ public class UserServiceImpl implements UserDetailsService {
 //        if(AuthConstant.ADMIN_CLIENT_ID.equals(clientId)) {
             userDto = adminService.loadUserByUsername(username);
 //            System.out.println("@@@@@@@@@@@"+userDto.getRoles());
-////            userDto.setId(1L);
-////            userDto.setUsername("zkc");
-////            userDto.setRoles(CollUtil.toList("ADMIN"));
+//            userDto.setId(1L);
+//            userDto.setUsername("zkc");
+//            userDto.setRoles(CollUtil.toList("ADMIN"));
 //            //密码需要 BCrypt.hashpw("123456")
-////            userDto.setPassword(BCrypt.hashpw(userDto.getPassword()));
-////            userDto.setPassword(BCrypt.hashpw("123456"));
+//            userDto.setPassword(BCrypt.hashpw(userDto.getPassword()));
+//            userDto.setPassword(BCrypt.hashpw("123456"));
 //            userDto.setStatus(1);
             userDto.setClientId(AuthConstant.ADMIN_CLIENT_ID);
+        System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$gagaga");
 //        }
         if (userDto==null) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);

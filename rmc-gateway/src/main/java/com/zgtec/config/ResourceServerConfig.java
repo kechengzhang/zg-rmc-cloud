@@ -23,6 +23,8 @@ import reactor.core.publisher.Mono;
 
 /**
  * 资源服务器配置
+ * 这是配置资源服务器的类，用于配置安全规则和JWT解析。
+ * 它指定了哪些路径需要进行认证和授权，以及如何解析JWT令牌。
  * @author zkc
  * @data 2023/07/15
  */

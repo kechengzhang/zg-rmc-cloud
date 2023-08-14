@@ -6,23 +6,23 @@ spring:
       matching-strategy: ant_path_matcher
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true #使用小写service-id
+#      discovery:
+#        locator:
+#          enabled: true
+#          lower-case-service-id: true #使用小写service-id
       routes: #配置路由路径
-        - id: rmc-auth
-          uri: lb://rmc-auth #需要转发的地址
-          #断言规则，用于路由规则匹配
+        - id: rmc-user #路由唯一标识，路由到rmc-user
+          uri: lb://rmc-user  # 需要转发的地址服务名，使用了nacos 服务注册名称 lb使用nacos本地负载均衡策略
+           #断言规则，用于路由规则匹配
           predicates:
-            - Path=/rmc-auth/**
+            - Path=/rmc_user_service/**
             # 转发之前去掉第一层路径
           filters:
             - StripPrefix=1
-        - id: rmc-user
-          uri: lb://rmc-user
+        - id: rmc-auth
+          uri: lb://rmc-auth #需要转发的地址
           predicates:
-            - Path=/rmc-user/**
+            - Path=/rmc-auth/**
           filters:
             - StripPrefix=1
         - id: rmc-monitor-management
@@ -31,15 +31,16 @@ spring:
             - Path=/rmc-monitor-management/**
           filters:
             - StripPrefix=1
+#配置RSA的公钥访问地址
   security:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: 'http://localhost:8201/rmc-auth/rsa/publicKey' #配置RSA的公钥访问地址
-  redis:
+          jwk-set-uri: 'http://localhost:8201/rmc-auth/rsa/publicKey'
+redis:
     database: 1
     port: 6379
-    host: redis
+    host: 47.101.31.117
     password: zkc654321
     lettuce:
           pool:
@@ -64,7 +65,11 @@ secure:
       - "/rmc-auth/oauth/token"
       - "/rmc-user/resource/initResourceRolesMap"
       - "/rmc-auth/rsa/publicKey"
+      - "/rmc-auth/login"
       - "/rmc-user/admin/login"
+      #- "/rmc-user/admin/*"
+      - "/rmc-auth/oauth/authorize"
+      - "/rmc-auth/oauth/token"
 management: #开启SpringBoot Admin的监控
   endpoints:
     web:

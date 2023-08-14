@@ -17,6 +17,8 @@ import java.nio.charset.Charset;
 
 /**
  * 自定义返回结果：没有登录或token过期时
+ * 这是一个自定义的身份验证入口点（AuthenticationEntryPoint），
+ * 当用户没有登录或令牌过期时，将返回自定义的错误响应。
  * @author zkc
  * @data 2023/07/15
  */

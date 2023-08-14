@@ -17,6 +17,8 @@ import java.text.ParseException;
 
 /**
  * 将登录用户的JWT转化成用户信息的全局过滤器
+ * 这是一个全局过滤器，用于将JWT令牌中的用户信息解析并设置到请求头中，
+ * 以便在后续的处理中使用。
  * @author zkc
  * @data 2023/07/15
  */

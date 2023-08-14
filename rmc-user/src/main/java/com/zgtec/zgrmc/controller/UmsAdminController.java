@@ -79,5 +79,4 @@ public class UmsAdminController {
         }
         return Result.failure(ResultCodeEnum.SAVE_ERROR);
     }
-
 }

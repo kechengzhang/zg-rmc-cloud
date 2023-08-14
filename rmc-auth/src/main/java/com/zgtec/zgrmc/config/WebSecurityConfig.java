@@ -27,6 +27,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/v2/api-docs").permitAll()
                 .antMatchers("/oauth/token").permitAll()
                 .anyRequest().authenticated();
+                //单点登录需要添加
+//                .and()
+//                .formLogin().loginPage("http://www.baidu.com")
+//                .permitAll(); // 允许所有人访问登录页面
     }
 
 //    @Override

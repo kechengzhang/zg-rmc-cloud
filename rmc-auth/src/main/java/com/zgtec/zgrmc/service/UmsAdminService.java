@@ -2,6 +2,7 @@ package com.zgtec.zgrmc.service;
 import com.zgtec.zgrmc.domain.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
@@ -17,5 +18,5 @@ public interface UmsAdminService {
      * @return
      */
     @GetMapping("/admin/users/{userName}")
-    UserDto loadUserByUsername(@RequestParam ("userName")String userName);
+    UserDto loadUserByUsername(@PathVariable("userName")String userName);
 }

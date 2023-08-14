@@ -11,6 +11,7 @@
         <module>rmc-service-configuration</module>
         <module>rmc-gateway</module>
         <module>rmc-monitor</module>
+        <module>oauth2-jwt-server</module>
     </modules>
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -27,7 +28,7 @@
         <java.version>1.8</java.version>
         <spring-cloud-alibaba-dependencies.version>2021.0.1.0</spring-cloud-alibaba-dependencies.version>
         <spring-cloud-dependencies.version>2021.0.1</spring-cloud-dependencies.version>
-        <fastjson.version>1.2.35</fastjson.version>
+        <fastjson.version>2.0.0</fastjson.version>
         <mysql-connector.version>8.0.13</mysql-connector.version>
         <mybatis-plus-boot-starter.version>3.4.0</mybatis-plus-boot-starter.version>
         <java-jwt.version>3.8.2</java-jwt.version>

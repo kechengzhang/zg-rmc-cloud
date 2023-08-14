@@ -1,8 +1,6 @@
 package com.zgtec.zgrmc.config;
 
 
-import cn.hutool.crypto.digest.BCrypt;
-import cn.hutool.jwt.Claims;
 import com.zgtec.zgrmc.component.JwtTokenEnhancer;
 import com.zgtec.zgrmc.service.impl.UserServiceImpl;
 import lombok.AllArgsConstructor;
@@ -21,13 +19,9 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
-import javax.security.cert.Certificate;
 import java.security.KeyPair;
-import java.security.cert.X509Certificate;
-import java.security.interfaces.RSAPrivateKey;
-import java.security.interfaces.RSAPublicKey;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -60,8 +54,26 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .authorizedGrantTypes("password", "refresh_token")
                 .accessTokenValiditySeconds(3600*24)
                 .refreshTokenValiditySeconds(3600*24*7);
+
+//                .withClient("user-app")
+//                .secret(passwordEncoder.encode("123456"))
+//                .accessTokenValiditySeconds(3600)
+//                .refreshTokenValiditySeconds(864000)
+//                .redirectUris("http://localhost:8069/login") //单点登录时配置
+////                .autoApprove(true) //自动授权配置
+//                .scopes("all")
+//                .authorizedGrantTypes("authorization_code","password","refresh_token");
+
+
+
+
     }
 
+    /**
+     * 使用密码模式需要配置
+     * @param endpoints
+     * @throws Exception
+     */
     @Override
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         TokenEnhancerChain enhancerChain = new TokenEnhancerChain();
@@ -80,8 +92,8 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
     @Override
     public void configure(AuthorizationServerSecurityConfigurer security) throws Exception {
         security.allowFormAuthenticationForClients();
+//        security.tokenKeyAccess("isAuthenticated()");// 获取密钥需要身份认证，使用单点登录时必须配置
     }
-
     @Bean
     public JwtAccessTokenConverter accessTokenConverter() {
         JwtAccessTokenConverter jwtAccessTokenConverter = new JwtAccessTokenConverter();

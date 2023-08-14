@@ -33,6 +33,9 @@ import java.util.stream.Collectors;
 /**
  * @author zkc
  * 鉴权管理器，用于判断是否有资源的访问权限
+ * 这是一个实现了Spring Security的ReactiveAuthorizationManager接口的类，
+ * 用于自定义鉴权逻辑。它根据请求的URI路径和用户角色来判断用户是否有权限访问该路径。
+ *
  * @date 2020/6/19.
  */
 @Component

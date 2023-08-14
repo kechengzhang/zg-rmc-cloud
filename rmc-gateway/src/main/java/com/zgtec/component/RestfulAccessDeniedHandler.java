@@ -19,6 +19,8 @@ import java.nio.charset.Charset;
 /**
  * @author  zkc
  * 自定义返回结果：没有权限访问时
+ * 这是一个自定义的处理器，用于处理访问被拒绝的情况。
+ * 当用户没有权限访问某个资源时，将返回自定义的错误响应。
  * @author zkc
  * @data 2023/07/15
  *
